@@ -9,7 +9,7 @@ import { getStatusTaskList } from "utils/getStatusTaskList";
 export const useTaskList = () => {
     const today = new Date();
 
-    const [cookies] = useCookies(['accessToken']);
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     const [todayTaskList, setTodayTaskList] = useState([]);
     const [specifiedTaskList, setSpecifiedTaskList] = useState([]);
@@ -21,7 +21,7 @@ export const useTaskList = () => {
 
     // タスク一覧の取得（今日）
     const getTodayTaskList = async () => {
-        const url = `${API_AUTH_URL}task-search/?search_type=today`;
+        const url = `${API_AUTH_URL}task-search/?search_type=today&login_user=${cookies.userId}`;
 
         try {
             const response = await axios.get(url,{
@@ -42,7 +42,7 @@ export const useTaskList = () => {
     const getSpecifiedTaskList = async () => {
         const formatDayStart = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + (today.getDate()+1);
         const formatDayEnd = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + (today.getDate()+5);
-        const url = `${API_AUTH_URL}task-search/?search_type=specific_date&specific_date_start=${formatDayStart}&specific_date_end=${formatDayEnd}`;
+        const url = `${API_AUTH_URL}task-search/?search_type=specific_date&specific_date_start=${formatDayStart}&specific_date_end=${formatDayEnd}&login_user=${cookies.userId}`;
 
         try {
             const response = await axios.get(url,{

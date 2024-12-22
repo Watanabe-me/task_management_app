@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 
-export function SearchBar() {
+export function SearchBar({ searchQuery, setSearchQuery }) {
 
     // 検索バーのスタイル
     const Search = styled('div')(({ theme }) => ({
@@ -153,6 +153,8 @@ export function SearchBar() {
             <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} // 親コンポーネントのsetSearchQueryを使って更新
             />
         </Search>
         <Accordion square sx={{ ml:1, width: "40%" }}>
